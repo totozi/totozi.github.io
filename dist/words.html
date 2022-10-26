@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <select id="selected">
+            <option value="100" selected>1~100</option>
+            <option value="200">1~200</option>
+            <option value="300">1~300</option>
+            <option value="400">1~400</option>
+            <option value="500">1~500</option>
+            <option value="600">1~600</option>
+            <option value="700">1~700</option>
+            <option value="3000">all</option>
+        </select>
+        <button onclick="print_words();">TEST START</button>
+    </div>
+    <div id="words">
+
+    </div>
+    <script src="../src\assets\files\words.json" type="text/javascript"></script>
+    <script>
+        let mydata = JSON.parse(JSON.stringify(data));
+        let str = "";
+        for (let i = 0; i < mydata.length; i++) {
+            str += JSON.stringify(mydata[i])+"<br>";
+        }
+        function print_words() {
+            document.getElementById("words").innerHTML = "";
+            console.log(document.getElementById("selected").value);
+            let range = document.getElementById("selected").value;
+            for (let index = 0; index < range; index++) {
+                let element = mydata[index];
+                let row_q = document.createElement('span');
+                row_q.innerHTML = (index+1) +". " + element.question + " ";
+                document.getElementById("words").appendChild(row_q);
+        
+                let row_b = document.createElement('button');
+                row_b.innerHTML = "answer";
+                row_b.setAttribute("onclick","show_answer(this);")
+                document.getElementById("words").appendChild(row_b);
+        
+                let row_a = document.createElement('span');
+                row_a.innerHTML = " "+ element.answer;
+                row_a.setAttribute("hidden","hidden");
+                document.getElementById("words").appendChild(row_a);
+                document.getElementById("words").appendChild(document.createElement('br'));
+                
+            }
+
+        }
+        function show_answer(event) {
+            console.log(event.nextElementSibling)
+            let answer = event.nextElementSibling;
+            answer.removeAttribute("hidden");
+        }
+
+    </script>
+</body>
+</html>
